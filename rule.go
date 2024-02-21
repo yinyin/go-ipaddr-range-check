@@ -70,6 +70,17 @@ type RuleSet struct {
 	rules []RuleEntry
 }
 
+func NewRuleSet(ruleEntries []RuleEntry) *RuleSet {
+	var rules []RuleEntry
+	if ruleEntriesCount := len(ruleEntries); ruleEntriesCount > 0 {
+		rules = make([]RuleEntry, ruleEntriesCount)
+		copy(rules, ruleEntries)
+	}
+	return &RuleSet{
+		rules: rules,
+	}
+}
+
 func (ruleSet *RuleSet) Contains(ip net.IP) bool {
 	for _, rule := range ruleSet.rules {
 		if rule.RuleInstance.Contains(ip) {
